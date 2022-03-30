@@ -11,7 +11,7 @@ namespace DAL
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Text;
     public partial class SalaryInfo
     {
         public int SalarySheetNo { get; set; }
