@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EMPDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DeptMaster">
+    <Key>
+      <PropertyRef Name="DeptCode" />
+    </Key>
+    <Property Name="DeptCode" Type="int" Nullable="false" />
+    <Property Name="DeptName" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="EmpProfiles">
+    <Key>
+      <PropertyRef Name="EmpCode" />
+    </Key>
+    <Property Name="EmpCode" Type="int" Nullable="false" />
+    <Property Name="EmpName" Type="nvarchar(max)" />
+    <Property Name="DateOfBirth" Type="datetime" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" />
+    <Property Name="DeptCode" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SalaryInfoes">
+    <Key>
+      <PropertyRef Name="SalarySheetNo" />
+    </Key>
+    <Property Name="SalarySheetNo" Type="int" Nullable="false" />
+    <Property Name="EmpCode" Type="int" Nullable="false" />
+    <Property Name="Basic" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Hra" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Da" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'EMPDB.dbo.SELECT_EMP_WITH_SALARY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="SELECT_EMP_WITH_SALARY">
+    <Key>
+      <PropertyRef Name="EmpCode" />
+      <PropertyRef Name="SalarySheetNo" />
+      <PropertyRef Name="Basic" />
+    </Key>
+    <Property Name="EmpCode" Type="int" Nullable="false" />
+    <Property Name="EmpName" Type="nvarchar(max)" />
+    <Property Name="SalarySheetNo" Type="int" Nullable="false" />
+    <Property Name="Basic" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_dbo_EmpProfiles_dbo_DeptMaster_DeptCode">
+    <End Role="DeptMaster" Type="Self.DeptMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="EmpProfiles" Type="Self.EmpProfiles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeptMaster">
+        <PropertyRef Name="DeptCode" />
+      </Principal>
+      <Dependent Role="EmpProfiles">
+        <PropertyRef Name="DeptCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_SalaryInfoes_dbo_EmpProfiles_EmpCode">
+    <End Role="EmpProfiles" Type="Self.EmpProfiles" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SalaryInfoes" Type="Self.SalaryInfoes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmpProfiles">
+        <PropertyRef Name="EmpCode" />
+      </Principal>
+      <Dependent Role="SalaryInfoes">
+        <PropertyRef Name="EmpCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="DeptMaster_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DeptCode" Type="int" Mode="In" />
+  </Function>
+  <Function Name="DeptMaster_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DeptCode" Type="int" Mode="In" />
+    <Parameter Name="DeptName" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="DeptMaster_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DeptCode" Type="int" Mode="In" />
+    <Parameter Name="DeptName" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="SelectEmpByCode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmpCode" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="EMPDBModelStoreContainer">
+    <EntitySet Name="DeptMaster" EntityType="Self.DeptMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmpProfiles" EntityType="Self.EmpProfiles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SalaryInfoes" EntityType="Self.SalaryInfoes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SELECT_EMP_WITH_SALARY" EntityType="Self.SELECT_EMP_WITH_SALARY" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [SELECT_EMP_WITH_SALARY].[EmpCode] AS [EmpCode], 
+    [SELECT_EMP_WITH_SALARY].[EmpName] AS [EmpName], 
+    [SELECT_EMP_WITH_SALARY].[SalarySheetNo] AS [SalarySheetNo], 
+    [SELECT_EMP_WITH_SALARY].[Basic] AS [Basic]
+    FROM [dbo].[SELECT_EMP_WITH_SALARY] AS [SELECT_EMP_WITH_SALARY]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_dbo_EmpProfiles_dbo_DeptMaster_DeptCode" Association="Self.FK_dbo_EmpProfiles_dbo_DeptMaster_DeptCode">
+      <End Role="DeptMaster" EntitySet="DeptMaster" />
+      <End Role="EmpProfiles" EntitySet="EmpProfiles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_SalaryInfoes_dbo_EmpProfiles_EmpCode" Association="Self.FK_dbo_SalaryInfoes_dbo_EmpProfiles_EmpCode">
+      <End Role="EmpProfiles" EntitySet="EmpProfiles" />
+      <End Role="SalaryInfoes" EntitySet="SalaryInfoes" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

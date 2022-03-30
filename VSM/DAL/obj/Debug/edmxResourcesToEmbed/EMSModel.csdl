@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EMPDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DeptMaster">
+    <Key>
+      <PropertyRef Name="DeptCode" />
+    </Key>
+    <Property Name="DeptCode" Type="Int32" Nullable="false" />
+    <Property Name="DeptName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="EmpProfiles" Relationship="Self.FK_dbo_EmpProfiles_dbo_DeptMaster_DeptCode" FromRole="DeptMaster" ToRole="EmpProfiles" />
+  </EntityType>
+  <EntityType Name="EmpProfile">
+    <Key>
+      <PropertyRef Name="EmpCode" />
+    </Key>
+    <Property Name="EmpCode" Type="Int32" Nullable="false" />
+    <Property Name="EmpName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DeptCode" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DeptMaster" Relationship="Self.FK_dbo_EmpProfiles_dbo_DeptMaster_DeptCode" FromRole="EmpProfiles" ToRole="DeptMaster" />
+    <NavigationProperty Name="SalaryInfoes" Relationship="Self.FK_dbo_SalaryInfoes_dbo_EmpProfiles_EmpCode" FromRole="EmpProfiles" ToRole="SalaryInfoes" />
+  </EntityType>
+  <EntityType Name="SalaryInfo">
+    <Key>
+      <PropertyRef Name="SalarySheetNo" />
+    </Key>
+    <Property Name="SalarySheetNo" Type="Int32" Nullable="false" />
+    <Property Name="EmpCode" Type="Int32" Nullable="false" />
+    <Property Name="Basic" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Hra" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Da" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <NavigationProperty Name="EmpProfile" Relationship="Self.FK_dbo_SalaryInfoes_dbo_EmpProfiles_EmpCode" FromRole="SalaryInfoes" ToRole="EmpProfiles" />
+  </EntityType>
+  <EntityType Name="SELECT_EMP_WITH_SALARY">
+    <Key>
+      <PropertyRef Name="EmpCode" />
+      <PropertyRef Name="SalarySheetNo" />
+      <PropertyRef Name="Basic" />
+    </Key>
+    <Property Name="EmpCode" Type="Int32" Nullable="false" />
+    <Property Name="EmpName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SalarySheetNo" Type="Int32" Nullable="false" />
+    <Property Name="Basic" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_dbo_EmpProfiles_dbo_DeptMaster_DeptCode">
+    <End Role="DeptMaster" Type="Self.DeptMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="EmpProfiles" Type="Self.EmpProfile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeptMaster">
+        <PropertyRef Name="DeptCode" />
+      </Principal>
+      <Dependent Role="EmpProfiles">
+        <PropertyRef Name="DeptCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_SalaryInfoes_dbo_EmpProfiles_EmpCode">
+    <End Role="EmpProfiles" Type="Self.EmpProfile" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SalaryInfoes" Type="Self.SalaryInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmpProfiles">
+        <PropertyRef Name="EmpCode" />
+      </Principal>
+      <Dependent Role="SalaryInfoes">
+        <PropertyRef Name="EmpCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EMPDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DeptMasters" EntityType="Self.DeptMaster" />
+    <EntitySet Name="EmpProfiles" EntityType="Self.EmpProfile" />
+    <EntitySet Name="SalaryInfoes" EntityType="Self.SalaryInfo" />
+    <EntitySet Name="SELECT_EMP_WITH_SALARY" EntityType="Self.SELECT_EMP_WITH_SALARY" />
+    <AssociationSet Name="FK_dbo_EmpProfiles_dbo_DeptMaster_DeptCode" Association="Self.FK_dbo_EmpProfiles_dbo_DeptMaster_DeptCode">
+      <End Role="DeptMaster" EntitySet="DeptMasters" />
+      <End Role="EmpProfiles" EntitySet="EmpProfiles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_SalaryInfoes_dbo_EmpProfiles_EmpCode" Association="Self.FK_dbo_SalaryInfoes_dbo_EmpProfiles_EmpCode">
+      <End Role="EmpProfiles" EntitySet="EmpProfiles" />
+      <End Role="SalaryInfoes" EntitySet="SalaryInfoes" />
+    </AssociationSet>
+    <FunctionImport Name="DeptMaster_Delete">
+      <Parameter Name="DeptCode" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DeptMaster_Insert">
+      <Parameter Name="DeptCode" Mode="In" Type="Int32" />
+      <Parameter Name="DeptName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="DeptMaster_Update">
+      <Parameter Name="DeptCode" Mode="In" Type="Int32" />
+      <Parameter Name="DeptName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SelectEmpByCode" ReturnType="Collection(EMPDBModel.SelectEmpByCode_Result)">
+      <Parameter Name="EmpCode" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="SelectEmpByCode_Result">
+    <Property Type="Int32" Name="EmpCode" Nullable="false" />
+    <Property Type="String" Name="EmpName" Nullable="true" />
+    <Property Type="DateTime" Name="DateOfBirth" Nullable="false" Precision="23" />
+    <Property Type="String" Name="Email" Nullable="true" />
+    <Property Type="Int32" Name="DeptCode" Nullable="false" />
+  </ComplexType>
+</Schema>

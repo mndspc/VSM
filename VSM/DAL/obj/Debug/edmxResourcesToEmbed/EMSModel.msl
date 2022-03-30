@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EMPDBModelStoreContainer" CdmEntityContainer="EMPDBEntities">
+    <EntitySetMapping Name="DeptMasters">
+      <EntityTypeMapping TypeName="EMPDBModel.DeptMaster">
+        <MappingFragment StoreEntitySet="DeptMaster">
+          <ScalarProperty Name="DeptCode" ColumnName="DeptCode" />
+          <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmpProfiles">
+      <EntityTypeMapping TypeName="EMPDBModel.EmpProfile">
+        <MappingFragment StoreEntitySet="EmpProfiles">
+          <ScalarProperty Name="EmpCode" ColumnName="EmpCode" />
+          <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="DeptCode" ColumnName="DeptCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SalaryInfoes">
+      <EntityTypeMapping TypeName="EMPDBModel.SalaryInfo">
+        <MappingFragment StoreEntitySet="SalaryInfoes">
+          <ScalarProperty Name="SalarySheetNo" ColumnName="SalarySheetNo" />
+          <ScalarProperty Name="EmpCode" ColumnName="EmpCode" />
+          <ScalarProperty Name="Basic" ColumnName="Basic" />
+          <ScalarProperty Name="Hra" ColumnName="Hra" />
+          <ScalarProperty Name="Da" ColumnName="Da" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SELECT_EMP_WITH_SALARY">
+      <EntityTypeMapping TypeName="EMPDBModel.SELECT_EMP_WITH_SALARY">
+        <MappingFragment StoreEntitySet="SELECT_EMP_WITH_SALARY">
+          <ScalarProperty Name="EmpCode" ColumnName="EmpCode" />
+          <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+          <ScalarProperty Name="SalarySheetNo" ColumnName="SalarySheetNo" />
+          <ScalarProperty Name="Basic" ColumnName="Basic" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="DeptMaster_Delete" FunctionName="EMPDBModel.Store.DeptMaster_Delete" />
+    <FunctionImportMapping FunctionImportName="DeptMaster_Insert" FunctionName="EMPDBModel.Store.DeptMaster_Insert" />
+    <FunctionImportMapping FunctionImportName="DeptMaster_Update" FunctionName="EMPDBModel.Store.DeptMaster_Update" />
+    <FunctionImportMapping FunctionImportName="SelectEmpByCode" FunctionName="EMPDBModel.Store.SelectEmpByCode">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EMPDBModel.SelectEmpByCode_Result">
+          <ScalarProperty Name="EmpCode" ColumnName="EmpCode" />
+          <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="DeptCode" ColumnName="DeptCode" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

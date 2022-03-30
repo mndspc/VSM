@@ -1,0 +1,11 @@
+D:\Corporate\Xebia\Tech Mahindra\Case Study\VSM\DAL\bin\Debug\DAL.dll.config
+D:\Corporate\Xebia\Tech Mahindra\Case Study\VSM\DAL\bin\Debug\DAL.dll
+D:\Corporate\Xebia\Tech Mahindra\Case Study\VSM\DAL\bin\Debug\DAL.pdb
+D:\Corporate\Xebia\Tech Mahindra\Case Study\VSM\DAL\bin\Debug\EntityFramework.dll
+D:\Corporate\Xebia\Tech Mahindra\Case Study\VSM\DAL\bin\Debug\EntityFramework.SqlServer.dll
+D:\Corporate\Xebia\Tech Mahindra\Case Study\VSM\DAL\bin\Debug\EntityFramework.xml
+D:\Corporate\Xebia\Tech Mahindra\Case Study\VSM\DAL\bin\Debug\EntityFramework.SqlServer.xml
+D:\Corporate\Xebia\Tech Mahindra\Case Study\VSM\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
+D:\Corporate\Xebia\Tech Mahindra\Case Study\VSM\DAL\obj\Debug\DAL.csproj.CopyComplete
+D:\Corporate\Xebia\Tech Mahindra\Case Study\VSM\DAL\obj\Debug\DAL.dll
+D:\Corporate\Xebia\Tech Mahindra\Case Study\VSM\DAL\obj\Debug\DAL.pdb
